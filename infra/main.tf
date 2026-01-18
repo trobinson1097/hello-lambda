@@ -3,15 +3,6 @@ provider "aws" {
   region = var.aws_region
 }
 
-resource "aws_s3_bucket" "lambda_bucket" {
-  bucket = var.s3_bucket 
-
-  tags = {
-    Environment = "Dev"
-    Project     = "HelloLambda"
-  }
-}
-
 resource "aws_iam_role" "lambda_exec_role" {
   name = "lambda_exec_role"
 
@@ -36,8 +27,7 @@ resource "aws_iam_role_policy_attachment" "lambda_policy" {
 
 resource "aws_lambda_function" "hello_lambda" {
   function_name = "hello-lambda"
-  s3_bucket     = aws_s3_bucket.lambda_bucket.id
-  s3_key        = "lambda_function.zip" # This will be created by GitHub Actions
+  filename      = "../lambda_function.zip"   # <- Use local file
   handler       = "lambda_function.lambda_handler"
   runtime       = "python3.9"
   role          = aws_iam_role.lambda_exec_role.arn
@@ -46,4 +36,5 @@ resource "aws_lambda_function" "hello_lambda" {
     Environment = "Dev"
     Project     = "HelloLambda"
   }
+
 }

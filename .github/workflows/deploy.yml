@@ -25,8 +25,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          # If you had any dependencies, you would install them here, e.g.,
-          # pip install -r requirements.txt
+          # Add any Python dependencies here if needed
 
       - name: Create deployment package
         run: zip -r lambda_function.zip lambda_function.py
@@ -43,15 +42,9 @@ jobs:
           terraform_version: 1.6.0
 
       - name: Terraform Init
-        run: terraform -chdir=infra init
-
-      - name: Terraform Apply
-        run: terraform -chdir=infra apply -auto-approve
-
-      - name: Get S3 Bucket Name from Terraform Output
-        id: get_bucket_name
-        run: echo "S3_BUCKET=$(terraform output -raw s3_bucket_name)" >> $GITHUB_OUTPUT
+        run: terraform init
         working-directory: infra
 
-      - name: Upload Lambda deployment package to S3
-        run: aws s3 cp lambda_function.zip s3://${{ steps.get_bucket_name.outputs.S3_BUCKET }}/lambda_function.zip
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        working-directory: infra
