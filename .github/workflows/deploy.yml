@@ -46,7 +46,7 @@ jobs:
         run: terraform -chdir=infra init
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve -chdir=infra
+        run: terraform -chdir=infra apply -auto-approve
 
       - name: Get S3 Bucket Name from Terraform Output
         id: get_bucket_name
