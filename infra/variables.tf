@@ -7,5 +7,5 @@ variable "aws_region" {
 variable "s3_bucket_name" {
   description = "Name of the S3 bucket to trigger the Lambda function"
   type        = string
-  default     = "tianas_lambda_project_thats_really_cool" # IMPORTANT: Change this to a globally unique name
+  default     = "tianas-lambda-project-thats-really-cool" # IMPORTANT: Change this to a globally unique name
 }
