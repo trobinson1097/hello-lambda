@@ -13,8 +13,6 @@ def lambda_handler(event, context):
         print(f"Object Key: {object_key}")
 
         # You can add more processing here, e.g., download the object, analyze it, etc.
-
-        # comment
     return {
         'body': json.dumps('Successfully processed S3 event!')
     }
